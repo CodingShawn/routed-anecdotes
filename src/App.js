@@ -105,6 +105,7 @@ const CreateNew = (props) => {
       votes: 0,
     });
     history.push("/");
+    props.newAnecdoteNotification(content);
   };
 
   return (
@@ -183,10 +184,21 @@ const App = () => {
     setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)));
   };
 
+  function newAnecdoteNotification(anecdote) {
+    setNotification(`A new anecdote ${anecdote} is created!`);
+    setTimeout(removeNotification, 10000);
+  }
+
+  function removeNotification() {
+    setNotification("");
+  }
+
   return (
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+
+      {notification && <div>{notification}</div>}
 
       <Switch>
         <Route path="/about">
@@ -194,7 +206,10 @@ const App = () => {
         </Route>
 
         <Route path="/create">
-          <CreateNew addNew={addNew} />
+          <CreateNew
+            addNew={addNew}
+            newAnecdoteNotification={newAnecdoteNotification}
+          />
         </Route>
 
         <Route path="/anecdotes/:id">
