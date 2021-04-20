@@ -5,6 +5,7 @@ import {
   Route,
   Link,
   useRouteMatch,
+  useHistory,
 } from "react-router-dom";
 
 const Menu = () => {
@@ -46,7 +47,9 @@ function Anecdote({ anecdote }) {
         {anecdote.content} by {anecdote.author}
       </h1>
       <div>has {anecdote.votes} votes</div>
-      <div>for more info see <a href={anecdote.info}>{anecdote.info}</a></div>
+      <div>
+        for more info see <a href={anecdote.info}>{anecdote.info}</a>
+      </div>
     </article>
   );
 }
@@ -91,6 +94,7 @@ const CreateNew = (props) => {
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
   const [info, setInfo] = useState("");
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,6 +104,7 @@ const CreateNew = (props) => {
       info,
       votes: 0,
     });
+    history.push("/");
   };
 
   return (
